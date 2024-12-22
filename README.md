@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Spring Boot + Spring data JPA + PostgreSQL example
 
 Article link : https://mkyong.com/spring-boot/spring-boot/spring-boot-spring-data-jpa-postgresql/
@@ -27,3 +28,6 @@ $ docker run --name pg1 -p 5432:5432 -e POSTGRES_USER=mkyong -e POSTGRES_PASSWOR
 $ ./mvnw spring-boot:run
 
 ```
+=======
+# petProjectSpring
+>>>>>>> 574eb43cb9b2629ae1d9e08deae61b199b9c8e0a
