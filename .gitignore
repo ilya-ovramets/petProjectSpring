@@ -1,3 +1,20 @@
-# Default ignored files
-/shelf/
-/.idea/**
+# Компільовані файли
+*.class
+
+# Лог-файли
+*.log
+
+# Каталоги для збірки
+/target/
+/out/
+
+# Налаштування IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Файли операційної системи
+.DS_Store
+Thumbs.db
