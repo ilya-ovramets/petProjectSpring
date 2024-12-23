@@ -1,7 +1,5 @@
 package com.illia;
 
-import com.illia.model.Book;
-import com.illia.repository.BookRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
