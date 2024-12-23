@@ -1,8 +1,8 @@
 package com.illia.controller;
 
 
-import com.illia.model.Tag;
-import com.illia.service.TagService;
+import com.illia.model.User;
+import com.illia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,32 +11,33 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/tag")
-public class TagController {
-    @Autowired
-    TagService tagService;
+@RequestMapping("/user")
+public class UserController {
 
+    @Autowired
+    UserService userService;
 
     @GetMapping
-    public List<Tag> findAll(){return tagService.findAll();}
+    public List<User> findAll(){return userService.findAll();}
 
     @GetMapping("/{id}")
-    public Optional<Tag> findById(@PathVariable Long id){return tagService.findById(id);}
+    public Optional<User> findById(@PathVariable Long id){return userService.findById(id);}
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
-    public Tag create(@RequestBody Tag tag) {
-        return tagService.save(tag);
+    public User create(@RequestBody User user) {
+        return userService.save(user);
     }
 
     @PutMapping
-    public Tag update(@RequestBody Tag tag) {
-        return tagService.save(tag);
+    public User update(@RequestBody User user) {
+        return userService.save(user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
-        tagService.deleteById(id);
+        userService.deleteById(id);
     }
+
 }
