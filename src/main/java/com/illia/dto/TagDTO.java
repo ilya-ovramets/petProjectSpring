@@ -1,9 +1,5 @@
 package com.illia.dto;
 
-
-
-import com.illia.model.Task;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -11,15 +7,13 @@ import java.util.Objects;
 public class TagDTO implements Serializable {
 
     private long id;
+    private String name;
+    private List<Long> taskIds;  // Список ID замість об'єктів Task
 
-    private  String name;
-
-    private List<Task> tasks;
-
-    public TagDTO(long id, String name, List<Task> tasks) {
+    public TagDTO(long id, String name, List<Long> taskIds) {
         this.id = id;
         this.name = name;
-        this.tasks = tasks;
+        this.taskIds = taskIds;
     }
 
     public TagDTO() {
@@ -41,12 +35,12 @@ public class TagDTO implements Serializable {
         this.name = name;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Long> getTaskIds() {
+        return taskIds;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setTaskIds(List<Long> taskIds) {
+        this.taskIds = taskIds;
     }
 
     @Override
@@ -54,12 +48,12 @@ public class TagDTO implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TagDTO tagDTO = (TagDTO) o;
-        return id == tagDTO.id && Objects.equals(name, tagDTO.name) && Objects.equals(tasks, tagDTO.tasks);
+        return id == tagDTO.id && Objects.equals(name, tagDTO.name) && Objects.equals(taskIds, tagDTO.taskIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, tasks);
+        return Objects.hash(id, name, taskIds);
     }
 
     @Override
@@ -67,7 +61,7 @@ public class TagDTO implements Serializable {
         return "TagDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", tasks=" + tasks +
+                ", taskIds=" + taskIds +
                 '}';
     }
 }

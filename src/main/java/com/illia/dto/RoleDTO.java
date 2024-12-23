@@ -1,26 +1,20 @@
 package com.illia.dto;
 
-
-
-import com.illia.model.User;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 public class RoleDTO implements Serializable {
     private long id;
-
     private String name;
-
-    private List<User> users;
+    private List<Long> userIds;  // Список ID користувачів
 
     public RoleDTO() { }
 
-    public RoleDTO(long id, String name, List<User> users) {
+    public RoleDTO(long id, String name, List<Long> userIds) {
         this.id = id;
         this.name = name;
-        this.users = users;
+        this.userIds = userIds;
     }
 
     public long getId() {
@@ -39,12 +33,12 @@ public class RoleDTO implements Serializable {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Long> getUserIds() {
+        return userIds;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUserIds(List<Long> userIds) {
+        this.userIds = userIds;
     }
 
     @Override
@@ -52,20 +46,20 @@ public class RoleDTO implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RoleDTO roleDTO = (RoleDTO) o;
-        return id == roleDTO.id && Objects.equals(name, roleDTO.name) && Objects.equals(users, roleDTO.users);
+        return id == roleDTO.id && Objects.equals(name, roleDTO.name) && Objects.equals(userIds, roleDTO.userIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, users);
+        return Objects.hash(id, name, userIds);
     }
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "RoleDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", users=" + users +
+                ", userIds=" + userIds +
                 '}';
     }
 }

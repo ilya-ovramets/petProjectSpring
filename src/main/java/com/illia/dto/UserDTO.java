@@ -1,43 +1,31 @@
 package com.illia.dto;
 
-
-
-import com.illia.model.Role;
-import com.illia.model.Task;
-
-import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
-public class UserDTO implements Serializable {
+public class UserDTO {
 
     private long id;
-
     private String firstName;
-
     private String lastName;
-
     private String email;
-
-    private List<Task> tasks;
-
+    private List<Long> taskIds;  // Замість списку Task, краще передавати список їх ID
     private String password;
+    private long roleId;  // Передавати тільки ID ролі, якщо це потрібно
 
-    private Role role;
+    // Конструктори
+    public UserDTO() {}
 
-    public UserDTO() {
-    }
-
-    public UserDTO(long id, String firstName, String lastName, String email, List<Task> tasks, String password, Role role) {
+    public UserDTO(long id, String firstName, String lastName, String email, List<Long> taskIds, String password, long roleId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.tasks = tasks;
+        this.taskIds = taskIds;
         this.password = password;
-        this.role = role;
+        this.roleId = roleId;
     }
 
+    // Гетери та сетери
     public long getId() {
         return id;
     }
@@ -70,12 +58,12 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Long> getTaskIds() {
+        return taskIds;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setTaskIds(List<Long> taskIds) {
+        this.taskIds = taskIds;
     }
 
     public String getPassword() {
@@ -86,37 +74,11 @@ public class UserDTO implements Serializable {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public long getRoleId() {
+        return roleId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", tasks=" + tasks +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDTO userDTO = (UserDTO) o;
-        return id == userDTO.id && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(email, userDTO.email) && Objects.equals(tasks, userDTO.tasks) && Objects.equals(password, userDTO.password) && Objects.equals(role, userDTO.role);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, tasks, password, role);
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 }

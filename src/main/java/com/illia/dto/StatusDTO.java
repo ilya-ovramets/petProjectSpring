@@ -1,28 +1,21 @@
 package com.illia.dto;
 
-
-
-import com.illia.model.Task;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 public class StatusDTO implements Serializable {
     private long id;
-
     private String statusName;
-
-    private List<Task> tasks;
+    private List<Long> taskIds;  // Заміна на список ID завдань
 
     public StatusDTO() {
-
     }
 
-    public StatusDTO(long id, String statusName, List<Task> tasks) {
+    public StatusDTO(long id, String statusName, List<Long> taskIds) {
         this.id = id;
         this.statusName = statusName;
-        this.tasks = tasks;
+        this.taskIds = taskIds;
     }
 
     public long getId() {
@@ -41,12 +34,12 @@ public class StatusDTO implements Serializable {
         this.statusName = statusName;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Long> getTaskIds() {
+        return taskIds;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setTaskIds(List<Long> taskIds) {
+        this.taskIds = taskIds;
     }
 
     @Override
@@ -54,12 +47,12 @@ public class StatusDTO implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StatusDTO statusDTO = (StatusDTO) o;
-        return id == statusDTO.id && Objects.equals(statusName, statusDTO.statusName) && Objects.equals(tasks, statusDTO.tasks);
+        return id == statusDTO.id && Objects.equals(statusName, statusDTO.statusName) && Objects.equals(taskIds, statusDTO.taskIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, statusName, tasks);
+        return Objects.hash(id, statusName, taskIds);
     }
 
     @Override
@@ -67,7 +60,7 @@ public class StatusDTO implements Serializable {
         return "StatusDTO{" +
                 "id=" + id +
                 ", statusName='" + statusName + '\'' +
-                ", tasks=" + tasks +
+                ", taskIds=" + taskIds +
                 '}';
     }
 }
