@@ -1,6 +1,7 @@
 package com.illia.controller;
 
 
+import com.illia.mapper.StatusMapper;
 import com.illia.model.Status;
 import com.illia.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class StatusController {
 
     @Autowired
     StatusService statusService;
+    @Autowired
+    StatusMapper statusMapper;
 
     @GetMapping
     public List<Status> findAll(){return statusService.findAll();}

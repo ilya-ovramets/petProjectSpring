@@ -1,10 +1,13 @@
 package com.illia.controller;
 
 
+import com.illia.dto.UserDTO;
+import com.illia.mapper.UserMapper;
 import com.illia.model.User;
 import com.illia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +19,23 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    UserMapper userMapper;
+
 
     @GetMapping
-    public List<User> findAll(){return userService.findAll();}
+    public List<UserDTO> findAll(){return userService.findAll().stream()
+            .map(userMapper::toDTO)
+            .toList();}
+
 
     @GetMapping("/{id}")
-    public Optional<User> findById(@PathVariable Long id){return userService.findById(id);}
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+        return userService.findById(id)
+                .map(user -> ResponseEntity.ok(userMapper.toDTO(user))) // Перетворення в DTO
+                .orElse(ResponseEntity.notFound().build());
+
+    }
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping

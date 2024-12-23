@@ -1,6 +1,7 @@
 package com.illia.controller;
 
 
+import com.illia.mapper.TaskMapper;
 import com.illia.model.Task;
 import com.illia.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class TaskController {
 
     @Autowired
     TaskService taskService;
+    @Autowired
+    TaskMapper taskMapper;
 
     @GetMapping
     public List<Task> findAll(){return taskService.findAll();}

@@ -1,6 +1,7 @@
 package com.illia.controller;
 
 
+import com.illia.mapper.TagMapper;
 import com.illia.model.Tag;
 import com.illia.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class TagController {
     @Autowired
     TagService tagService;
+    @Autowired
+    TagMapper tagMapper;
 
 
     @GetMapping

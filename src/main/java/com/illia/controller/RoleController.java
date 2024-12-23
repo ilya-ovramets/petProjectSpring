@@ -1,6 +1,7 @@
 package com.illia.controller;
 
 
+import com.illia.mapper.RoleMapper;
 import com.illia.model.Role;
 import com.illia.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class RoleController {
 
     @Autowired
     RoleService roleService;
+    @Autowired
+    RoleMapper roleMapper;
 
     @GetMapping
     public List<Role> findAll(){return roleService.findAll();}
