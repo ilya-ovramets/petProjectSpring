@@ -17,7 +17,6 @@ import java.util.List;
 
 @SpringBootApplication
 public class MainApplication {
-
     private static final Logger log = LoggerFactory.getLogger(MainApplication.class);
 
     public static void main(String[] args) {
