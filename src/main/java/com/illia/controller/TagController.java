@@ -1,45 +1,57 @@
 package com.illia.controller;
 
-
+import com.illia.dto.TagDTO;
 import com.illia.mapper.TagMapper;
 import com.illia.model.Tag;
 import com.illia.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tag")
 public class TagController {
+
     @Autowired
     TagService tagService;
+
     @Autowired
     TagMapper tagMapper;
 
-
     @GetMapping
-    public List<Tag> findAll(){return tagService.findAll();}
+    public List<TagDTO> findAll() {
+        return tagService.findAll().stream().map(tagMapper::toDTO).toList();
+    }
 
     @GetMapping("/{id}")
-    public Optional<Tag> findById(@PathVariable Long id){return tagService.findById(id);}
+    public ResponseEntity<TagDTO> findById(@PathVariable Long id) {
+        return tagService.findById(id)
+                .map(tag -> ResponseEntity.ok(tagMapper.toDTO(tag)))
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
-    public Tag create(@RequestBody Tag tag) {
-        return tagService.save(tag);
+    public ResponseEntity<TagDTO> create(@RequestBody TagDTO tagDTO) {
+        Tag tag = tagMapper.toEntity(tagDTO);
+        tagService.save(tag);
+        return ResponseEntity.ok().body(tagDTO);
     }
 
-    @PutMapping
-    public Tag update(@RequestBody Tag tag) {
-        return tagService.save(tag);
+    @PutMapping("/{id}")
+    public ResponseEntity<TagDTO> update(@PathVariable Long id, @RequestBody TagDTO tagDTO) {
+        Tag tag = tagMapper.toEntity(tagDTO);
+        Tag updatedTag = tagService.update(id, tag);
+        return ResponseEntity.ok(tagMapper.toDTO(updatedTag));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         tagService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

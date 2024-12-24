@@ -1,11 +1,14 @@
 package com.illia.controller;
 
 
+import com.illia.dto.RoleDTO;
 import com.illia.mapper.RoleMapper;
 import com.illia.model.Role;
+import com.illia.model.User;
 import com.illia.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,25 +24,37 @@ public class RoleController {
     RoleMapper roleMapper;
 
     @GetMapping
-    public List<Role> findAll(){return roleService.findAll();}
+    public List<RoleDTO> findAll(){
+        return roleService.findAll().stream().map(roleMapper::toDTO).toList();
+    }
 
     @GetMapping("/{id}")
-    public Optional<Role> findById(@PathVariable Long id){return roleService.findById(id);}
+    public ResponseEntity<RoleDTO> findById(@PathVariable Long id){
+        return roleService.findById(id)
+            .map(role -> ResponseEntity.ok(roleMapper.toDTO(role))) // Перетворення в DTO
+            .orElse(ResponseEntity.notFound().build());}
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
-    public Role create(@RequestBody Role role) {
-        return roleService.save(role);
+    public ResponseEntity<RoleDTO> create(@RequestBody RoleDTO roleDTO) {
+        Role role = roleMapper.toEntity(roleDTO);
+        roleService.save(role);
+
+        return ResponseEntity.ok().body(roleDTO);
     }
 
-    @PutMapping
-    public Role update(@RequestBody Role role) {
-        return roleService.save(role);
+    @PutMapping("/{id}")
+    public ResponseEntity<RoleDTO> update(@PathVariable Long id,@RequestBody RoleDTO roleDTO) {
+        Role role = roleMapper.toEntity(roleDTO);
+        Role newRole = roleService.update(id,role);
+        return ResponseEntity.ok(roleDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         roleService.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

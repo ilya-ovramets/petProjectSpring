@@ -30,7 +30,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User updateUser) {
+    public User update(Long id, User updateUser) {
         return this.findById(id).
                 map((existingUser) -> {
                     existingUser.setFirstName(updateUser.getFirstName());

@@ -8,5 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
     RoleDTO toDTO(Role role);
+    @Mapping(target = "id", ignore = true)
     Role toEntity(RoleDTO roleDTO);
 }

@@ -53,8 +53,8 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable Long id,@RequestBody UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
-        User updateUser = userService.updateUser(id,user);
-        return ResponseEntity.ok(userMapper.toDTO(updateUser));
+        User newUser = userService.update(id,user);
+        return ResponseEntity.ok(userDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204
