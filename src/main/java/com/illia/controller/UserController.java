@@ -4,7 +4,9 @@ package com.illia.controller;
 import com.illia.dto.UserDTO;
 import com.illia.mapper.UserMapper;
 import com.illia.model.User;
+import com.illia.service.RoleService;
 import com.illia.service.UserService;
+import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ public class UserController {
     UserService userService;
     @Autowired
     UserMapper userMapper;
+
 
 
     @GetMapping
@@ -40,9 +43,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
-        User user = userService.save(userMapper.toEntity(userDTO));
-        UserDTO responceDTO = userMapper.toDTO(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responceDTO);
+        User user = userMapper.toEntity(userDTO);
+        userService.save(user);
+
+        return ResponseEntity.ok().body(userDTO);
+
     }
 
     @PutMapping("/{id}")

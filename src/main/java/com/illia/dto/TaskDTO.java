@@ -14,13 +14,13 @@ public class TaskDTO implements Serializable {
     private LocalDate startDate;
     private LocalDate finishDate;
     private long createdBy;  // Замість ID "createBy" краще використовувати 'createdBy'
-    private String status;  // Використовуємо статус як String або ID
+    private String statusName;  // Використовуємо статус як String або ID
     private List<Long> tagIds;  // Замість List<Tag> передавати список ID тегів
 
     // Конструктори
     public TaskDTO() {}
 
-    public TaskDTO(long id, String title, String body, List<Long> performerIds, LocalDate startDate, LocalDate finishDate, long createdBy, String status, List<Long> tagIds) {
+    public TaskDTO(long id, String title, String body, List<Long> performerIds, LocalDate startDate, LocalDate finishDate, long createdBy, String statusName, List<Long> tagIds) {
         this.id = id;
         this.title = title;
         this.body = body;
@@ -28,7 +28,7 @@ public class TaskDTO implements Serializable {
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.createdBy = createdBy;
-        this.status = status;
+        this.statusName = statusName;
         this.tagIds = tagIds;
     }
 
@@ -89,12 +89,12 @@ public class TaskDTO implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStatusName() {
+        return statusName;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 
     public List<Long> getTagIds() {
@@ -110,12 +110,12 @@ public class TaskDTO implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskDTO taskDTO = (TaskDTO) o;
-        return id == taskDTO.id && createdBy == taskDTO.createdBy && Objects.equals(title, taskDTO.title) && Objects.equals(body, taskDTO.body) && Objects.equals(performerIds, taskDTO.performerIds) && Objects.equals(startDate, taskDTO.startDate) && Objects.equals(finishDate, taskDTO.finishDate) && Objects.equals(status, taskDTO.status) && Objects.equals(tagIds, taskDTO.tagIds);
+        return id == taskDTO.id && createdBy == taskDTO.createdBy && Objects.equals(title, taskDTO.title) && Objects.equals(body, taskDTO.body) && Objects.equals(performerIds, taskDTO.performerIds) && Objects.equals(startDate, taskDTO.startDate) && Objects.equals(finishDate, taskDTO.finishDate) && Objects.equals(statusName, taskDTO.statusName) && Objects.equals(tagIds, taskDTO.tagIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, body, performerIds, startDate, finishDate, createdBy, status, tagIds);
+        return Objects.hash(id, title, body, performerIds, startDate, finishDate, createdBy, statusName, tagIds);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class TaskDTO implements Serializable {
                 ", startDate=" + startDate +
                 ", finishDate=" + finishDate +
                 ", createdBy=" + createdBy +
-                ", status='" + status + '\'' +
+                ", statusName='" + statusName + '\'' +
                 ", tagIds=" + tagIds +
                 '}';
     }

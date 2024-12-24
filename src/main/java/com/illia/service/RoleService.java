@@ -19,8 +19,11 @@ public class RoleService {
 
     public Optional<Role> findById(Long id){return roleRepository.findById(id);}
 
+    public Optional<Role> findByName(String name){return roleRepository.findByName(name);}
+
     public Role save(Role role){return roleRepository.save(role);}
 
     public void deleteById(Long id){roleRepository.deleteById(id);}
+
 
 }

@@ -10,19 +10,19 @@ public class UserDTO {
     private String email;
     private List<Long> taskIds;  // Замість списку Task, краще передавати список їх ID
     private String password;
-    private long roleId;  // Передавати тільки ID ролі, якщо це потрібно
+    private String roleName;  // Передавати тільки ID ролі, якщо це потрібно
 
     // Конструктори
     public UserDTO() {}
 
-    public UserDTO(long id, String firstName, String lastName, String email, List<Long> taskIds, String password, long roleId) {
+    public UserDTO(long id, String firstName, String lastName, String email, List<Long> taskIds, String password, String roleName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.taskIds = taskIds;
         this.password = password;
-        this.roleId = roleId;
+        this.roleName = roleName;
     }
 
     // Гетери та сетери
@@ -74,11 +74,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public long getRoleId() {
-        return roleId;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRoleId(long roleId) {
-        this.roleId = roleId;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }
