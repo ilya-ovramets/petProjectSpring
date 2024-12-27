@@ -21,6 +21,6 @@ public class UserDTO {
     private String lastName;
     private String email;
     private List<TaskDTO> taskDTOS;  // Замість списку Task, краще передавати список їх ID
-    private RoleDTO role;  // Передавати тільки ID ролі, якщо це потрібно
+    private RoleDTO roleDTO;  // Передавати тільки ID ролі, якщо це потрібно
 
 }

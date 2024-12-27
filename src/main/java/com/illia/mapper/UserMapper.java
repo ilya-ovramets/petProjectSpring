@@ -14,9 +14,7 @@ public interface UserMapper extends EntityMapper<UserDTO,User> {
     @Mapping(target = "roleDTO", source="role")
     UserDTO toDtoEager(User user);
 
-    @Mapping(target ="task", source = "taskDTOS")
+    @Mapping(target ="tasks", source = "taskDTOS")
     @Mapping(target = "role", source="roleDTO")
     User toEntityEager(UserDTO userDTO);
-
-
 }
