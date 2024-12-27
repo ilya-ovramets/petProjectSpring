@@ -1,5 +1,6 @@
 package com.illia.mapper;
 
+import com.illia.dto.StatusDTO;
 import com.illia.dto.TagDTO;
 import com.illia.dto.TaskDTO;
 import com.illia.model.Status;
@@ -17,13 +18,14 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TaskMapper extends EntityMapper<TaskDTO, Task>{
 
-    @Mapping(target= "statusName", source = "status.name")
+    @Mapping(target= "statusDTO", source = "status")
     TaskDTO toDto(Task task);
 
-    @Mapping(target = "status", source = "statusName", qualifiedByName = "customStatusQ")
+    @Mapping(target = "status", source = "statusDTO")
     Task toEntity(TaskDTO taskDto);
 
-    @Named("customStatusQ")
-    @Mapping(target = "status", source = "statusName")
-    Status toCustomStatusEntity(String statusName);
+    //param qualifiedByName = "customStatusQ"
+//    @Named("customStatusQ")
+//    @Mapping(target = "status", source = "statusDTO")
+//    Status toCustomStatusEntity(TaskDTO taskDTO);
 }
