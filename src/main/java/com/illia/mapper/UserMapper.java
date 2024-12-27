@@ -20,11 +20,5 @@ public abstract class UserMapper {
     @Mapping(target = "id", ignore = true)
     public abstract User toEntity(UserDTO userDTO);
 
-    @AfterMapping
-    protected void setRoleForEntity(@MappingTarget User user, UserDTO userDTO) {
-        if (userDTO.getRoleName() != null) {
-            Role role = roleService.findByName(userDTO.getRoleName()).get();
-            user.setRole(role);
-        }
-    }
+
 }

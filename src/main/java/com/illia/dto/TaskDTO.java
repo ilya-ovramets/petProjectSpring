@@ -1,6 +1,7 @@
 package com.illia.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,16 +16,16 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskDTO implements Serializable {
     private long id;
     private String title;
     private String body;
-    @JsonIgnore
-    private List<Long> performerIds;  // Замість List<User> передавати список ID користувачів
+    private List<UserDTO> performerDtos;  // Замість List<User> передавати список ID користувачів
     private LocalDate startDate;
     private LocalDate finishDate;
-    private long createdBy;  // Замість ID "createBy" краще використовувати 'createdBy'
-    private List<Long> tagIds;  // Замість List<Tag> передавати список ID тегівp
+    private long createBy;  // Замість ID "createBy" краще використовувати 'createdBy'
+    private List<TagDTO> tagDTOS;  // Замість List<Tag> передавати список ID тегівp
     private StatusDTO statusDTO;
 
 }

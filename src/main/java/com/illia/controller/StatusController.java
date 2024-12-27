@@ -26,13 +26,13 @@ public class StatusController {
 
     @GetMapping
     public List<StatusDTO> findAll(){
-        return statusService.findAll().stream().map(statusMapper::toDto).toList();
+        return statusService.findAll().stream().map(statusMapper::toDtoLazy).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StatusDTO> findById(@PathVariable Long id){
         return statusService.findById(id)
-                .map(status -> ResponseEntity.ok(statusMapper.toDto(status))) // Перетворення в DTO
+                .map(status -> ResponseEntity.ok(statusMapper.toDtoLazy(status))) // Перетворення в DTO
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -40,7 +40,7 @@ public class StatusController {
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<StatusDTO> create(@RequestBody StatusDTO statusDTO) {
-        Status status = statusMapper.toEntity(statusDTO);
+        Status status = statusMapper.toEntityLazy(statusDTO);
         statusService.save(status);
 
         return ResponseEntity.ok().body(statusDTO);

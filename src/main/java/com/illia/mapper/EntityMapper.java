@@ -8,13 +8,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import java.util.List;
 
 public interface EntityMapper <D,E>{
-    E toEntity(D dto);
+    E toEntityLazy(D dto);
 
-    D toDto(E entity);
-
-    List<E> toEntity(List<D> dtoList);
-
-    List<D> toDto(List<E> entityList);
+    D toDtoLazy(E entity);
 
     @Named("partialUpdate")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

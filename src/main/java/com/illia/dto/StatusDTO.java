@@ -1,6 +1,7 @@
 package com.illia.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,10 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StatusDTO implements Serializable {
     private long id;
     private String name;
-    @JsonIgnore
     private List<Long> taskIds;  // Заміна на список ID завдань
 
 }

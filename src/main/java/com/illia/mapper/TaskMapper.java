@@ -18,11 +18,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TaskMapper extends EntityMapper<TaskDTO, Task>{
 
+    @Mapping(target = "performerDtos", source = "performers")
     @Mapping(target= "statusDTO", source = "status")
-    TaskDTO toDto(Task task);
+    @Mapping(target= "tagDTOS", source = "tags")
+    TaskDTO toDtoEager(Task task);
 
+    @Mapping(target = "performers", source = "performerDtos")
     @Mapping(target = "status", source = "statusDTO")
-    Task toEntity(TaskDTO taskDto);
+    @Mapping(target= "tags", source = "tagDTOS")
+    Task toEntityEager(TaskDTO taskDto);
 
     //param qualifiedByName = "customStatusQ"
 //    @Named("customStatusQ")

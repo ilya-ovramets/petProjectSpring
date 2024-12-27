@@ -25,19 +25,19 @@ public class RoleController {
 
     @GetMapping
     public List<RoleDTO> findAll(){
-        return roleService.findAll().stream().map(roleMapper::toDto).toList();
+        return roleService.findAll().stream().map(roleMapper::toDtoLazy).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RoleDTO> findById(@PathVariable Long id){
         return roleService.findById(id)
-            .map(role -> ResponseEntity.ok(roleMapper.toDto(role))) // Перетворення в DTO
+            .map(role -> ResponseEntity.ok(roleMapper.toDtoLazy(role))) // Перетворення в DTO
             .orElse(ResponseEntity.notFound().build());}
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<RoleDTO> create(@RequestBody RoleDTO roleDTO) {
-        Role role = roleMapper.toEntity(roleDTO);
+        Role role = roleMapper.toEntityLazy(roleDTO);
         roleService.save(role);
 
         return ResponseEntity.ok().body(roleDTO);

@@ -23,28 +23,28 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDTO> findAll() {
-        return taskService.findAll().stream().map(taskMapper::toDto).toList();
+        return taskService.findAll().stream().map(taskMapper::toDtoLazy).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> findById(@PathVariable Long id) {
         return taskService.findById(id)
-                .map(task -> ResponseEntity.ok(taskMapper.toDto(task)))
+                .map(task -> ResponseEntity.ok(taskMapper.toDtoEager(task)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO taskDTO) {
-        Task task = taskMapper.toEntity(taskDTO);
+        Task task = taskMapper.toEntityLazy(taskDTO);
         taskService.save(task);
         return ResponseEntity.ok().body(taskDTO);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
-        Task updatedTask = taskService.update(id, taskMapper.toEntity(taskDTO));
-        return ResponseEntity.ok(taskMapper.toDto(updatedTask));
+        Task updatedTask = taskService.update(id, taskMapper.toEntityLazy(taskDTO));
+        return ResponseEntity.ok(taskMapper.toDtoLazy(updatedTask));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204
