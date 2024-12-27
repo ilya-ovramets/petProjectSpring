@@ -20,5 +20,5 @@ import java.util.Objects;
 public class RoleDTO implements Serializable {
     private long id;
     private String name;
-    private List<UserDTO> users;  // Список ID користувачів
+    private List<UserDTO> userDTOS;  // Список ID користувачів
 }

@@ -32,7 +32,7 @@ public class StatusController {
     @GetMapping("/{id}")
     public ResponseEntity<StatusDTO> findById(@PathVariable Long id){
         return statusService.findById(id)
-                .map(status -> ResponseEntity.ok(statusMapper.toDtoLazy(status))) // Перетворення в DTO
+                .map(status -> ResponseEntity.ok(statusMapper.toDtoEager(status))) // Перетворення в DTO
                 .orElse(ResponseEntity.notFound().build());
     }
 

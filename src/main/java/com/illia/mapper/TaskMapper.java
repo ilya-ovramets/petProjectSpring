@@ -28,8 +28,4 @@ public interface TaskMapper extends EntityMapper<TaskDTO, Task>{
     @Mapping(target= "tags", source = "tagDTOS")
     Task toEntityEager(TaskDTO taskDto);
 
-    //param qualifiedByName = "customStatusQ"
-//    @Named("customStatusQ")
-//    @Mapping(target = "status", source = "statusDTO")
-//    Status toCustomStatusEntity(TaskDTO taskDTO);
 }

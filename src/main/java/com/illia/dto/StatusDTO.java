@@ -19,6 +19,7 @@ import java.util.Objects;
 public class StatusDTO implements Serializable {
     private long id;
     private String name;
-    private List<Long> taskIds;  // Заміна на список ID завдань
+    @JsonIgnore
+    private List<TaskDTO> taskDTOS;  // Заміна на список ID завдань
 
 }

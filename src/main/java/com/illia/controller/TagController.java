@@ -29,7 +29,7 @@ public class TagController {
     @GetMapping("/{id}")
     public ResponseEntity<TagDTO> findById(@PathVariable Long id) {
         return tagService.findById(id)
-                .map(tag -> ResponseEntity.ok(tagMapper.toDtoLazy(tag)))
+                .map(tag -> ResponseEntity.ok(tagMapper.toDtoEager(tag)))
                 .orElse(ResponseEntity.notFound().build());
     }
 

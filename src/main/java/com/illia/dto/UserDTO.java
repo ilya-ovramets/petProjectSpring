@@ -20,9 +20,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private List<Long> taskIds;  // Замість списку Task, краще передавати список їх ID
-    @JsonIgnore
-    private String password;
-    private String roleName;  // Передавати тільки ID ролі, якщо це потрібно
+    private List<TaskDTO> taskDTOS;  // Замість списку Task, краще передавати список їх ID
+    private RoleDTO role;  // Передавати тільки ID ролі, якщо це потрібно
 
 }

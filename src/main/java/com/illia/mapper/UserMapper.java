@@ -8,17 +8,15 @@ import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
-public abstract class UserMapper {
+public interface UserMapper extends EntityMapper<UserDTO,User> {
 
-    @Autowired
-    protected RoleService roleService;
+    @Mapping(target ="taskDTOS", source = "tasks")
+    @Mapping(target = "roleDTO", source="role")
+    UserDTO toDtoEager(User user);
 
-    @Mapping(target = "roleName", source = "role.name")
-    public abstract UserDTO toDTO(User user);
-
-    @Mapping(target = "role", ignore = true) // Ігноруємо поле role, щоб встановити його пізніше
-    @Mapping(target = "id", ignore = true)
-    public abstract User toEntity(UserDTO userDTO);
+    @Mapping(target ="task", source = "taskDTOS")
+    @Mapping(target = "role", source="roleDTO")
+    User toEntityEager(UserDTO userDTO);
 
 
 }

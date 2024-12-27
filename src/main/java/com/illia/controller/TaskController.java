@@ -43,8 +43,12 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
-        taskMapper.partialUpdate(taskService.findById(id).get(), taskDTO);
-        return ResponseEntity.ok(taskDTO);
+        if(taskService.findById(id).isPresent()){
+            taskMapper.partialUpdate(taskService.findById(id).get(), taskDTO);
+            return ResponseEntity.ok(taskDTO);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204

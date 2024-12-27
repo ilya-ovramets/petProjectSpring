@@ -24,18 +24,16 @@ public class UserController {
     @Autowired
     UserMapper userMapper;
 
-
-
     @GetMapping
     public List<UserDTO> findAll(){return userService.findAll().stream()
-            .map(userMapper::toDTO)
+            .map(userMapper::toDtoLazy)
             .toList();}
 
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id){
         return userService.findById(id)
-                .map(user -> ResponseEntity.ok(userMapper.toDTO(user))) // Перетворення в DTO
+                .map(user -> ResponseEntity.ok(userMapper.toDtoEager(user))) // Перетворення в DTO
                 .orElse(ResponseEntity.notFound().build());
 
     }
@@ -43,7 +41,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
-        User user = userMapper.toEntity(userDTO);
+        User user = userMapper.toEntityLazy(userDTO);
         userService.save(user);
 
         return ResponseEntity.ok().body(userDTO);
@@ -52,9 +50,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable Long id,@RequestBody UserDTO userDTO) {
-        User user = userMapper.toEntity(userDTO);
-        User newUser = userService.update(id,user);
-        return ResponseEntity.ok(userDTO);
+        if(userService.findById(id).isPresent()) {
+            userMapper.partialUpdate(userService.findById(id).get(), userDTO);
+            return ResponseEntity.ok(userDTO);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204

@@ -21,5 +21,6 @@ public class TagDTO implements Serializable {
 
     private long id;
     private String name;
-    private List<Long> taskIds;  // Список ID замість об'єктів Task
+    @JsonIgnore
+    private List<TaskDTO> taskDTOS;  // Список ID замість об'єктів Task
 }
