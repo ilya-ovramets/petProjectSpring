@@ -22,18 +22,7 @@ public class StatusService {
 
     public Optional<Status> findById(Long id){return statusRepository.findById(id);}
 
-    public Optional<Status> findByName(String name){return statusRepository.findByName(name);}
-
     public Status save(Status status){return statusRepository.save(status);}
-
-    public Status update(Long id, Status updateStatus){
-        return this.findById(id).map(existedStatus -> {
-            existedStatus.setName(updateStatus.getName());
-            return statusRepository.save(existedStatus);
-
-        }).orElseThrow(() -> new ResolutionException("Status not found with ID" + id));
-
-    }
 
     public void deleteById(Long id){statusRepository.deleteById(id);}
 

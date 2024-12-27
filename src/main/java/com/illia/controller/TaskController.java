@@ -43,8 +43,8 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
-        Task updatedTask = taskService.update(id, taskMapper.toEntityLazy(taskDTO));
-        return ResponseEntity.ok(taskMapper.toDtoLazy(updatedTask));
+        taskMapper.partialUpdate(taskService.findById(id).get(), taskDTO);
+        return ResponseEntity.ok(taskDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204

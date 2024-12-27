@@ -31,7 +31,7 @@ public class RoleController {
     @GetMapping("/{id}")
     public ResponseEntity<RoleDTO> findById(@PathVariable Long id){
         return roleService.findById(id)
-            .map(role -> ResponseEntity.ok(roleMapper.toDtoLazy(role))) // Перетворення в DTO
+            .map(role -> ResponseEntity.ok(roleMapper.toDtoEager(role))) // Перетворення в DTO
             .orElse(ResponseEntity.notFound().build());}
 
     @ResponseStatus(HttpStatus.CREATED) // 201
