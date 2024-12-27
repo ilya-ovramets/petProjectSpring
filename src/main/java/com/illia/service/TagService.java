@@ -20,12 +20,15 @@ public class TagService {
 
     public Optional<Tag> findById(Long id){return tagRepository.findById(id);}
 
+    public List<Tag> findByIds(List<Long> ids){
+        return ids.stream().map(id -> tagRepository.findById(id).get()).toList();
+    }
+
     public Tag save(Tag tag){return tagRepository.save(tag);}
 
     public Tag update(Long id, Tag updateTag){
         return this.findById(id).map(existedTag -> {
             existedTag.setName(updateTag.getName());
-            existedTag.setTasks(updateTag.getTasks());
             return tagRepository.save(existedTag);
 
         }).orElseThrow(() -> new ResolutionException("Tag not found with ID" + id));

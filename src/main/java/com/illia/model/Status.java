@@ -1,4 +1,5 @@
 package com.illia.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -11,9 +12,10 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "status_name")
-    private String statusName;
+    @Column(name = "name")
+    private String name;
 
+    @JsonIgnore()
     @OneToMany(mappedBy = "status")
     private List<Task> tasks;
 
@@ -21,9 +23,9 @@ public class Status {
 
     }
 
-    public Status(long id, String statusName) {
+    public Status(long id, String name) {
         this.id = id;
-        this.statusName = statusName;
+        this.name = name;
     }
 
 
@@ -44,19 +46,19 @@ public class Status {
         this.id = id;
     }
 
-    public String getStatusName() {
-        return statusName;
+    public String getName() {
+        return name;
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Status{" +
                 "id=" + id +
-                ", statusName='" + statusName + '\'' +
+                ", statusName='" + name + '\'' +
                 ", tasks=" + tasks +
                 '}';
     }
@@ -66,11 +68,11 @@ public class Status {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Status status = (Status) o;
-        return id == status.id && Objects.equals(statusName, status.statusName) && Objects.equals(tasks, status.tasks);
+        return id == status.id && Objects.equals(name, status.name) && Objects.equals(tasks, status.tasks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, statusName, tasks);
+        return Objects.hash(id, name, tasks);
     }
 }

@@ -1,6 +1,7 @@
 package com.illia.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class Role {
     @Column(name="name")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "role",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> users;
 

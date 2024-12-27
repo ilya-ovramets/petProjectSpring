@@ -1,6 +1,7 @@
 package com.illia.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.illia.mapper.StatusMapper;
 import com.illia.dto.StatusDTO;
 import com.illia.model.Role;
@@ -25,13 +26,13 @@ public class StatusController {
 
     @GetMapping
     public List<StatusDTO> findAll(){
-        return statusService.findAll().stream().map(statusMapper::toDTO).toList();
+        return statusService.findAll().stream().map(statusMapper::toDto).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StatusDTO> findById(@PathVariable Long id){
         return statusService.findById(id)
-                .map(status -> ResponseEntity.ok(statusMapper.toDTO(status))) // Перетворення в DTO
+                .map(status -> ResponseEntity.ok(statusMapper.toDto(status))) // Перетворення в DTO
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -47,8 +48,7 @@ public class StatusController {
 
     @PutMapping("/{id}")
     public ResponseEntity<StatusDTO> update(@PathVariable Long id, @RequestBody StatusDTO statusDTO) {
-        Status status = statusMapper.toEntity(statusDTO);
-        Status newRole = statusService.update(id,status);
+        statusMapper.partialUpdate(statusService.findById(id).get(),statusDTO);
         return ResponseEntity.ok(statusDTO);
     }
 

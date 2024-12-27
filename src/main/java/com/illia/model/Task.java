@@ -30,10 +30,10 @@ public class Task {
     private LocalDate finishDate;
 
     @Column(name = "create_by")
-    private long createBy;
+    private Long createBy;
 
     @ManyToOne
-    @JoinColumn(name="status_id", nullable = false)
+    @JoinColumn(name="status_id")
     private Status status;
 
 
@@ -50,11 +50,11 @@ public class Task {
 
     }
 
-    public Task(long id, String title, String body, List<User> performens, LocalDate startDate, LocalDate finishDate, long createBy, List<Tag> tags,Status status) {
+    public Task(long id, String title, String body, List<User> performers, LocalDate startDate, LocalDate finishDate, Long createBy, List<Tag> tags,Status status) {
         this.id = id;
         this.title = title;
         this.body = body;
-        this.performers = performens;
+        this.performers = performers;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.createBy = createBy;
@@ -102,11 +102,11 @@ public class Task {
         this.finishDate = finishDate;
     }
 
-    public long getCreateBy() {
+    public Long getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(long createBy) {
+    public void setCreateBy(Long createBy) {
         this.createBy = createBy;
     }
 
@@ -142,7 +142,7 @@ public class Task {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", body='" + body + '\'' +
-                ", performers=" + performers +
+                ", performers=" + (performers != null ? performers.stream().map(User::getId).toList() : "null") +
                 ", startDate=" + startDate +
                 ", finishDate=" + finishDate +
                 ", createBy=" + createBy +

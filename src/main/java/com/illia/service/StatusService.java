@@ -3,6 +3,7 @@ package com.illia.service;
 
 import com.illia.model.Role;
 import com.illia.model.Status;
+import com.illia.model.Task;
 import com.illia.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,13 @@ public class StatusService {
 
     public Optional<Status> findById(Long id){return statusRepository.findById(id);}
 
+    public Optional<Status> findByName(String name){return statusRepository.findByName(name);}
+
     public Status save(Status status){return statusRepository.save(status);}
 
     public Status update(Long id, Status updateStatus){
         return this.findById(id).map(existedStatus -> {
-            existedStatus.setStatusName(updateStatus.getStatusName());
-            existedStatus.setTasks(updateStatus.getTasks());
+            existedStatus.setName(updateStatus.getName());
             return statusRepository.save(existedStatus);
 
         }).orElseThrow(() -> new ResolutionException("Status not found with ID" + id));

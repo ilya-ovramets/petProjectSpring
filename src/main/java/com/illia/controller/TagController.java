@@ -23,13 +23,13 @@ public class TagController {
 
     @GetMapping
     public List<TagDTO> findAll() {
-        return tagService.findAll().stream().map(tagMapper::toDTO).toList();
+        return tagService.findAll().stream().map(tagMapper::toDto).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TagDTO> findById(@PathVariable Long id) {
         return tagService.findById(id)
-                .map(tag -> ResponseEntity.ok(tagMapper.toDTO(tag)))
+                .map(tag -> ResponseEntity.ok(tagMapper.toDto(tag)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -43,9 +43,8 @@ public class TagController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TagDTO> update(@PathVariable Long id, @RequestBody TagDTO tagDTO) {
-        Tag tag = tagMapper.toEntity(tagDTO);
-        Tag updatedTag = tagService.update(id, tag);
-        return ResponseEntity.ok(tagMapper.toDTO(updatedTag));
+        tagMapper.partialUpdate(tagService.findById(id).get(),tagDTO);
+        return ResponseEntity.ok(tagDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204

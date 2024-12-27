@@ -25,16 +25,6 @@ public class RoleService {
 
     public Role save(Role role){return roleRepository.save(role);}
 
-    public Role update(Long id, Role updateRole){
-        return this.findById(id).map(existedRole -> {
-            existedRole.setName(updateRole.getName());
-            existedRole.setUsers(updateRole.getUsers());
-            return roleRepository.save(existedRole);
-
-        }).orElseThrow(() -> new ResolutionException("Role not found with ID" + id));
-
-    }
-
 
     public void deleteById(Long id){roleRepository.deleteById(id);}
 

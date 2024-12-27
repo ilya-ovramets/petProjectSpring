@@ -13,7 +13,7 @@ public abstract class UserMapper {
     @Autowired
     protected RoleService roleService;
 
-    @Mapping(target = "roleName", expression = "java(user.getRole() != null ? user.getRole().getName() : null)")
+    @Mapping(target = "roleName", source = "role.name")
     public abstract UserDTO toDTO(User user);
 
     @Mapping(target = "role", ignore = true) // Ігноруємо поле role, щоб встановити його пізніше

@@ -32,7 +32,7 @@ public class Tag {
     }
 
     public void setName(String name) {
-        name = name;
+        this.name = name;
     }
 
     public long getId() {

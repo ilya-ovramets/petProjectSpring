@@ -23,13 +23,13 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDTO> findAll() {
-        return taskService.findAll().stream().map(taskMapper::toDTO).toList();
+        return taskService.findAll().stream().map(taskMapper::toDto).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> findById(@PathVariable Long id) {
         return taskService.findById(id)
-                .map(task -> ResponseEntity.ok(taskMapper.toDTO(task)))
+                .map(task -> ResponseEntity.ok(taskMapper.toDto(task)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -44,7 +44,7 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
         Task updatedTask = taskService.update(id, taskMapper.toEntity(taskDTO));
-        return ResponseEntity.ok(taskMapper.toDTO(updatedTask));
+        return ResponseEntity.ok(taskMapper.toDto(updatedTask));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204

@@ -26,22 +26,40 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public List<User> findByIds(List<Long> ids) {
+        return ids.stream().map(id -> userRepository.findById(id).get()).toList();
+    }
+
+
     public User save(User user) {
         return userRepository.save(user);
     }
 
     public User update(Long id, User updateUser) {
-        return this.findById(id).
-                map((existingUser) -> {
-                    existingUser.setFirstName(updateUser.getFirstName());
-                    existingUser.setLastName(updateUser.getLastName());
-                    existingUser.setEmail(updateUser.getEmail());
-                    existingUser.setRole(updateUser.getRole());
-                    existingUser.setPassword(updateUser.getPassword());
-                    existingUser.setTasks(updateUser.getTasks());
+        return this.findById(id)
+                .map(existingUser -> {
+                    if (updateUser.getFirstName() != null) {
+                        existingUser.setFirstName(updateUser.getFirstName());
+                    }
+                    if (updateUser.getLastName() != null) {
+                        existingUser.setLastName(updateUser.getLastName());
+                    }
+                    if (updateUser.getEmail() != null) {
+                        existingUser.setEmail(updateUser.getEmail());
+                    }
+                    if (updateUser.getRole() != null) {
+                        existingUser.setRole(updateUser.getRole());
+                    }
+                    if (updateUser.getPassword() != null) {
+                        existingUser.setPassword(updateUser.getPassword());
+                    }
+                    if (updateUser.getTasks() != null) {
+                        existingUser.setTasks(updateUser.getTasks());
+                    }
+
                     return userRepository.save(existingUser);
                 })
-                .orElseThrow(() -> new ResolutionException("User not found with ID" + id));
+                .orElseThrow(() -> new ResolutionException("User not found with ID: " + id));
     }
 
     public void deleteById(Long id) {

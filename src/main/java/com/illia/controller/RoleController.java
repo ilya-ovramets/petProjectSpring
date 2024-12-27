@@ -25,13 +25,13 @@ public class RoleController {
 
     @GetMapping
     public List<RoleDTO> findAll(){
-        return roleService.findAll().stream().map(roleMapper::toDTO).toList();
+        return roleService.findAll().stream().map(roleMapper::toDto).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RoleDTO> findById(@PathVariable Long id){
         return roleService.findById(id)
-            .map(role -> ResponseEntity.ok(roleMapper.toDTO(role))) // Перетворення в DTO
+            .map(role -> ResponseEntity.ok(roleMapper.toDto(role))) // Перетворення в DTO
             .orElse(ResponseEntity.notFound().build());}
 
     @ResponseStatus(HttpStatus.CREATED) // 201
@@ -45,8 +45,7 @@ public class RoleController {
 
     @PutMapping("/{id}")
     public ResponseEntity<RoleDTO> update(@PathVariable Long id,@RequestBody RoleDTO roleDTO) {
-        Role role = roleMapper.toEntity(roleDTO);
-        Role newRole = roleService.update(id,role);
+        roleMapper.partialUpdate(roleService.findById(id).get(),roleDTO);
         return ResponseEntity.ok(roleDTO);
     }
 
