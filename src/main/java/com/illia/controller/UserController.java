@@ -1,6 +1,7 @@
 package com.illia.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.illia.dto.UserDTO;
 import com.illia.mapper.UserMapper;
 import com.illia.model.User;
@@ -25,44 +26,37 @@ public class UserController {
     UserMapper userMapper;
 
     @GetMapping
-    public List<UserDTO> findAll(){return userService.findAll().stream()
-            .map(userMapper::toDtoLazy)
-            .toList();}
+    public List<UserDTO> getAll() {
+        return userService.findAll();
+    }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+    public ResponseEntity<UserDTO> getById(@PathVariable Long id){
         return userService.findById(id)
-                .map(user -> ResponseEntity.ok(userMapper.toDtoEager(user))) // Перетворення в DTO
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-
     }
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
-        User user = userMapper.toEntityLazy(userDTO);
-        userService.save(user);
-
+        userService.save(userDTO);
         return ResponseEntity.ok().body(userDTO);
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id,@RequestBody UserDTO userDTO) {
-        if(userService.findById(id).isPresent()) {
-            userMapper.partialUpdate(userService.findById(id).get(), userDTO);
-            return ResponseEntity.ok(userDTO);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping
+    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
+        userService.save(userDTO);
+        return ResponseEntity.ok().body(userDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         userService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
 }

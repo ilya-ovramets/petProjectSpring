@@ -22,33 +22,28 @@ public class TaskController {
     TaskMapper taskMapper;
 
     @GetMapping
-    public List<TaskDTO> findAll() {
-        return taskService.findAll().stream().map(taskMapper::toDtoLazy).toList();
+    public List<TaskDTO> getAll() {
+        return taskService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<TaskDTO> getById(@PathVariable Long id) {
         return taskService.findById(id)
-                .map(task -> ResponseEntity.ok(taskMapper.toDtoEager(task)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO taskDTO) {
-        Task task = taskMapper.toEntityLazy(taskDTO);
-        taskService.save(task);
+        taskService.save(taskDTO);
         return ResponseEntity.ok().body(taskDTO);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TaskDTO> update(@PathVariable Long id, @RequestBody TaskDTO taskDTO) {
-        if(taskService.findById(id).isPresent()){
-            taskMapper.partialUpdate(taskService.findById(id).get(), taskDTO);
-            return ResponseEntity.ok(taskDTO);
-        }else {
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping
+    public ResponseEntity<TaskDTO> update(@RequestBody TaskDTO taskDTO) {
+        taskService.save(taskDTO);
+        return ResponseEntity.ok().body(taskDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204

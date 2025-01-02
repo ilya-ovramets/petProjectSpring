@@ -20,7 +20,7 @@ public class Role {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
     private List<User> users;
 
     public Role(){
@@ -60,8 +60,7 @@ public class Role {
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", users ="+ users +
+                ", name='" + name +
                 '}';
     }
 

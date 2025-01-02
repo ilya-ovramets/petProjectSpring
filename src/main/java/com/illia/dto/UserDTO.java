@@ -2,10 +2,7 @@ package com.illia.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -22,5 +19,4 @@ public class UserDTO {
     private String email;
     private List<TaskDTO> taskDTOS;  // Замість списку Task, краще передавати список їх ID
     private RoleDTO roleDTO;  // Передавати тільки ID ролі, якщо це потрібно
-
 }

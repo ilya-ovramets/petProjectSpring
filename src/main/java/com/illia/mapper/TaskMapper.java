@@ -3,9 +3,11 @@ package com.illia.mapper;
 import com.illia.dto.StatusDTO;
 import com.illia.dto.TagDTO;
 import com.illia.dto.TaskDTO;
+import com.illia.dto.UserDTO;
 import com.illia.model.Status;
 import com.illia.model.Tag;
 import com.illia.model.Task;
+import com.illia.model.User;
 import com.illia.service.StatusService;
 import com.illia.service.TagService;
 import com.illia.service.UserService;
@@ -27,5 +29,4 @@ public interface TaskMapper extends EntityMapper<TaskDTO, Task>{
     @Mapping(target = "status", source = "statusDTO")
     @Mapping(target= "tags", source = "tagDTOS")
     Task toEntityEager(TaskDTO taskDto);
-
 }

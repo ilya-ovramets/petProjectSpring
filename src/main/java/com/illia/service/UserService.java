@@ -1,7 +1,10 @@
 package com.illia.service;
 
+import com.illia.dto.UserDTO;
+import com.illia.mapper.UserMapper;
 import com.illia.model.User;
 import com.illia.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,24 +15,39 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @Autowired
+    private UserMapper userMapper;;
+
+    @Transactional
+    public List<UserDTO> findAll() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toDtoLazy)
+                .toList();
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    @Transactional
+    public Optional<UserDTO> findById(Long id) {
+        return userRepository.findById(id)
+                .map(userMapper::toDtoEager);
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    @Transactional
+    public UserDTO save(UserDTO userDTO) {
+        try {
+            var user = userMapper.toEntityEager(userDTO);
+            userRepository.save(user);
+            return userDTO;
+        }catch (Exception ex){
+            throw ex;
+        }
+
+
     }
 
-    public User save(User user) {
-        return userRepository.save(user);
-    }
-
+    @Transactional
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
