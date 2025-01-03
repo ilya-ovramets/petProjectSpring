@@ -50,7 +50,9 @@ public class TagService {
     @Transactional
     public TagDTO update(Long id, TagDTO tagDTO){
         try {
-            tagMapper.partialUpdate(tagRepository.findById(id).get(),tagDTO);
+            Tag existingTag = tagRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Tag with id " + id + " not found"));
+            tagMapper.partialUpdate(existingTag,tagDTO);
             return tagDTO;
         }catch (Exception e){
             throw e;

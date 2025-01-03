@@ -21,18 +21,16 @@ public class StatusController {
 
     @Autowired
     StatusService statusService;
-    @Autowired
-    StatusMapper statusMapper;
 
     @GetMapping
     public List<StatusDTO> findAll(){
-        return statusService.findAll().stream().map(statusMapper::toDtoLazy).toList();
+        return statusService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StatusDTO> findById(@PathVariable Long id){
         return statusService.findById(id)
-                .map(status -> ResponseEntity.ok(statusMapper.toDtoEager(status))) // Перетворення в DTO
+                .map(ResponseEntity::ok) // Перетворення в DTO
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -40,24 +38,20 @@ public class StatusController {
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<StatusDTO> create(@RequestBody StatusDTO statusDTO) {
-        Status status = statusMapper.toEntityLazy(statusDTO);
-        statusService.save(status);
-
+        statusService.save(statusDTO);
         return ResponseEntity.ok().body(statusDTO);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<StatusDTO> update(@PathVariable Long id, @RequestBody StatusDTO statusDTO) {
-        statusMapper.partialUpdate(statusService.findById(id).get(),statusDTO);
+        statusService.update(id,statusDTO);
         return ResponseEntity.ok(statusDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-
         statusService.deleteById(id);
-
         return ResponseEntity.noContent().build();
     }
 }

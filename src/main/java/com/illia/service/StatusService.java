@@ -1,11 +1,15 @@
 package com.illia.service;
 
 
+import com.illia.dto.RoleDTO;
+import com.illia.dto.StatusDTO;
 import com.illia.mapper.StatusMapper;
 import com.illia.model.Role;
 import com.illia.model.Status;
+import com.illia.model.Tag;
 import com.illia.model.Task;
 import com.illia.repository.StatusRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +25,46 @@ public class StatusService {
     @Autowired
     StatusMapper statusMapper;
 
-    public List<Status> findAll(){return statusRepository.findAll();}
+    @Transactional
+    public List<StatusDTO> findAll(){
+        return statusRepository.findAll()
+                .stream()
+                .map(statusMapper::toDtoLazy).toList();
+    }
 
-    public Optional<Status> findById(Long id){return statusRepository.findById(id);}
+    @Transactional
+    public Optional<StatusDTO> findById(Long id){
+        return statusRepository.findById(id)
+                .map(statusMapper::toDtoEager);
+    }
 
-    public Status save(Status status){return statusRepository.save(status);}
+    @Transactional
+    public StatusDTO save(StatusDTO statusDTO){
+        try {
+            Status status = statusMapper.toEntityLazy(statusDTO);
+            statusRepository.save(status);
+            return statusDTO;
+        }catch (Exception ex){
+            throw ex;
+        }
+    }
 
-    public void deleteById(Long id){statusRepository.deleteById(id);}
+    @Transactional
+    public StatusDTO update(Long id, StatusDTO statusDTO){
+        try {
+            Status existingStatus = statusRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Status with id " + id + " not found"));
+
+            statusMapper.partialUpdate(existingStatus,statusDTO);
+            return statusDTO;
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+
+    public void deleteById(Long id){
+        statusRepository.deleteById(id);
+    }
 
 }
