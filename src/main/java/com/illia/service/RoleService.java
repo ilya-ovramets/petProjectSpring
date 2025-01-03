@@ -4,6 +4,7 @@ package com.illia.service;
 import com.illia.dto.RoleDTO;
 import com.illia.mapper.RoleMapper;
 import com.illia.model.Role;
+import com.illia.model.Tag;
 import com.illia.model.Task;
 import com.illia.model.User;
 import com.illia.repository.RoleRepository;
@@ -51,7 +52,10 @@ public class RoleService {
     @Transactional
     public RoleDTO update(Long id,RoleDTO roleDTO){
         try {
-            roleMapper.partialUpdate(roleRepository.findById(id).get(),roleDTO);
+            Role existingRole = roleRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Tag with id " + id + " not found"));
+
+            roleMapper.partialUpdate(existingRole,roleDTO);
             return roleDTO;
         }catch (Exception e){
             throw e;
