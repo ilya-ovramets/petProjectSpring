@@ -1,10 +1,14 @@
 package com.illia.service;
 
 
+import com.illia.dto.TagDTO;
+import com.illia.dto.TagDTO;
 import com.illia.mapper.TagMapper;
 import com.illia.model.Tag;
 import com.illia.model.Tag;
+import com.illia.model.Tag;
 import com.illia.repository.TagRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +24,38 @@ public class TagService {
     @Autowired
     TagMapper tagMapper;
 
-    public List<Tag> findAll(){return tagRepository.findAll();}
+    @Transactional
+    public List<TagDTO> findAll(){
+        return tagRepository.findAll()
+                .stream().map(tagMapper::toDtoLazy)
+                .toList();
+    }
 
-    public Optional<Tag> findById(Long id){return tagRepository.findById(id);}
+    @Transactional
+    public Optional<TagDTO> findById(Long id){
+        return tagRepository.findById(id).map(tagMapper::toDtoEager);
+    }
 
 
-    public Tag save(Tag tag){return tagRepository.save(tag);}
+    public TagDTO save(TagDTO tagDTO){
+        try {
+            Tag tag = tagMapper.toEntityLazy(tagDTO);
+            tagRepository.save(tag);
+            return tagDTO;
+        }catch (Exception ex){
+            throw ex;
+        }
+    }
+
+    @Transactional
+    public TagDTO update(Long id, TagDTO tagDTO){
+        try {
+            tagMapper.partialUpdate(tagRepository.findById(id).get(),tagDTO);
+            return tagDTO;
+        }catch (Exception e){
+            throw e;
+        }
+    }
 
     public void deleteById(Long id){tagRepository.deleteById(id);}
 

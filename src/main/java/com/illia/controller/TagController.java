@@ -18,32 +18,28 @@ public class TagController {
     @Autowired
     TagService tagService;
 
-    @Autowired
-    TagMapper tagMapper;
-
     @GetMapping
     public List<TagDTO> findAll() {
-        return tagService.findAll().stream().map(tagMapper::toDtoLazy).toList();
+        return tagService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TagDTO> findById(@PathVariable Long id) {
         return tagService.findById(id)
-                .map(tag -> ResponseEntity.ok(tagMapper.toDtoEager(tag)))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<TagDTO> create(@RequestBody TagDTO tagDTO) {
-        Tag tag = tagMapper.toEntityLazy(tagDTO);
-        tagService.save(tag);
+        tagService.save(tagDTO);
         return ResponseEntity.ok().body(tagDTO);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TagDTO> update(@PathVariable Long id, @RequestBody TagDTO tagDTO) {
-        tagMapper.partialUpdate(tagService.findById(id).get(),tagDTO);
+        tagService.update(id,tagDTO);
         return ResponseEntity.ok(tagDTO);
     }
 

@@ -82,10 +82,10 @@ public class UserService {
             existingUser.setTasks(resaveUser.getTasks());
         }
 
-        // Збереження зміненого користувача в репозиторії
+        // Save
         User updatedUser = userRepository.save(existingUser);
 
-        // Повернення оновленого DTO
+        // Return updated DTO
         return userMapper.toDtoEager(updatedUser);
     }
 
