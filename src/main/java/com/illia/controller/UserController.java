@@ -22,8 +22,7 @@ public class UserController {
 
     @Autowired
     UserService userService;
-    @Autowired
-    UserMapper userMapper;
+
 
     @GetMapping
     public List<UserDTO> getAll() {
@@ -48,7 +47,7 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
-        userService.save(userDTO);
+        userService.update(userDTO);
         return ResponseEntity.ok().body(userDTO);
     }
 

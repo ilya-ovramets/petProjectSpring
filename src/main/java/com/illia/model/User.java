@@ -2,6 +2,7 @@ package com.illia.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +23,7 @@ public class User {
     private String lastName;
 
 
-
+    @Email
     @Column(name = "email")
     private String email;
 

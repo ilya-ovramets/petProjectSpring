@@ -20,32 +20,31 @@ public class RoleController {
 
     @Autowired
     RoleService roleService;
-    @Autowired
-    RoleMapper roleMapper;
+
 
     @GetMapping
     public List<RoleDTO> findAll(){
-        return roleService.findAll().stream().map(roleMapper::toDtoLazy).toList();
+        return roleService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoleDTO> findById(@PathVariable Long id){
+    public ResponseEntity<RoleDTO> findById(@PathVariable Long id) {
         return roleService.findById(id)
-            .map(role -> ResponseEntity.ok(roleMapper.toDtoEager(role))) // Перетворення в DTO
-            .orElse(ResponseEntity.notFound().build());}
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<RoleDTO> create(@RequestBody RoleDTO roleDTO) {
-        Role role = roleMapper.toEntityLazy(roleDTO);
-        roleService.save(role);
+        roleService.save(roleDTO);
 
         return ResponseEntity.ok().body(roleDTO);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<RoleDTO> update(@PathVariable Long id,@RequestBody RoleDTO roleDTO) {
-        roleMapper.partialUpdate(roleService.findById(id).get(),roleDTO);
+        roleService.update(id,roleDTO);
         return ResponseEntity.ok(roleDTO);
     }
 
@@ -53,7 +52,6 @@ public class RoleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         roleService.deleteById(id);
-
         return ResponseEntity.noContent().build();
     }
 }

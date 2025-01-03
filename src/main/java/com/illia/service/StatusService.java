@@ -1,6 +1,7 @@
 package com.illia.service;
 
 
+import com.illia.mapper.StatusMapper;
 import com.illia.model.Role;
 import com.illia.model.Status;
 import com.illia.model.Task;
@@ -17,6 +18,8 @@ public class StatusService {
 
     @Autowired
     StatusRepository statusRepository;
+    @Autowired
+    StatusMapper statusMapper;
 
     public List<Status> findAll(){return statusRepository.findAll();}
 

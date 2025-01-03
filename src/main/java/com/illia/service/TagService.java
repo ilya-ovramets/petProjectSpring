@@ -1,6 +1,7 @@
 package com.illia.service;
 
 
+import com.illia.mapper.TagMapper;
 import com.illia.model.Tag;
 import com.illia.model.Tag;
 import com.illia.repository.TagRepository;
@@ -15,6 +16,9 @@ import java.util.Optional;
 public class TagService {
     @Autowired
     TagRepository tagRepository;
+
+    @Autowired
+    TagMapper tagMapper;
 
     public List<Tag> findAll(){return tagRepository.findAll();}
 

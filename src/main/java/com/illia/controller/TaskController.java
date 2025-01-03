@@ -18,8 +18,6 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
-    @Autowired
-    TaskMapper taskMapper;
 
     @GetMapping
     public List<TaskDTO> getAll() {
@@ -42,7 +40,7 @@ public class TaskController {
 
     @PutMapping
     public ResponseEntity<TaskDTO> update(@RequestBody TaskDTO taskDTO) {
-        taskService.save(taskDTO);
+        taskService.update(taskDTO);
         return ResponseEntity.ok().body(taskDTO);
     }
 
