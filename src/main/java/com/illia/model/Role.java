@@ -16,7 +16,7 @@ public class Role {
     private long id;
 
 
-    @Column(name="name",unique = true)
+    @Column(name="role_name",unique = true)
     private String name;
 
     @JsonIgnore

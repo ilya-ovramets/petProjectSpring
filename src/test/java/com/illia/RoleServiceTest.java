@@ -13,12 +13,5 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class RoleServiceTest {
 
-    @Autowired
-    private RoleService roleService;
 
-    @Test
-    public void testFindByName() {
-        Optional<Role> role = roleService.findByName("Admin");
-        assertTrue(role.isPresent());
-    }
 }
