@@ -63,6 +63,7 @@ public class StatusService {
     }
 
 
+    @Transactional
     public void deleteById(Long id){
         statusRepository.deleteById(id);
     }

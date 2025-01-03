@@ -37,6 +37,7 @@ public class TagService {
     }
 
 
+    @Transactional
     public TagDTO save(TagDTO tagDTO){
         try {
             Tag tag = tagMapper.toEntityLazy(tagDTO);
