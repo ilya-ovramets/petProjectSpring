@@ -44,6 +44,9 @@
         </dependency>
 
 
+
+
+
         <!-- Spring MVC -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,6 +58,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!--  Spring Secyrity  -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>6.4.2</version>
+        </dependency>
+
 
         <!-- PostgreSQL database -->
         <dependency>
@@ -166,6 +177,14 @@
                 <configuration>
                     <propertyFile>src/main/resources/db/liquibase.properties</propertyFile>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.liquibase.ext</groupId>
+                        <artifactId>liquibase-hibernate5</artifactId>
+                        <version>4.27.0</version>
+                    </dependency>
+                </dependencies>
+
             </plugin>
 
 
