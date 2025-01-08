@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @EntityGraph(attributePaths = {"tasks", "role"})
     Optional<User> findById(Long id);
 
+    Optional<User> findUserByEmail(String email);
 }

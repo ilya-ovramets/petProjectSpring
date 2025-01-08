@@ -21,4 +21,7 @@ public class UserDTO {
     private String email;
     private List<TaskDTO> taskDTOS;  // Замість списку Task, краще передавати список їх ID
     private RoleDTO roleDTO;  // Передавати тільки ID ролі, якщо це потрібно
+    @JsonIgnore
+    private String password;
+
 }

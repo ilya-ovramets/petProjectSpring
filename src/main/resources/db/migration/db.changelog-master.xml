@@ -7,5 +7,5 @@
 
     <include file="/db/migration/version_1_0/Initial-migration.xml"/>
     <include file="db/migration/version_1_0/rename_field_in_table_Role.xml"/>
-    <include file="/db/migration/version_1_0/add_field_in_table_Role.xml"/>
+<!--    <include file="/db/migration/version_1_0/add_field_in_table_Role.xml"/>-->
 </databaseChangeLog>
