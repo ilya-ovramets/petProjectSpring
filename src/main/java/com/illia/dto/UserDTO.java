@@ -7,10 +7,7 @@ import lombok.*;
 
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO {
 
@@ -21,7 +18,6 @@ public class UserDTO {
     private String email;
     private List<TaskDTO> taskDTOS;  // Замість списку Task, краще передавати список їх ID
     private RoleDTO roleDTO;  // Передавати тільки ID ролі, якщо це потрібно
-    @JsonIgnore
     private String password;
 
 }

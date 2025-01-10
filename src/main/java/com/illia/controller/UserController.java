@@ -40,14 +40,14 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
-        userService.save(userDTO);
+        userDTO = userService.save(userDTO);
         return ResponseEntity.ok().body(userDTO);
 
     }
 
     @PutMapping
     public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
-        userService.update(userDTO);
+        userDTO = userService.update(userDTO);
         return ResponseEntity.ok().body(userDTO);
     }
 

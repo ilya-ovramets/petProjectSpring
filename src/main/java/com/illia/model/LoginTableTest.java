@@ -1,37 +1,30 @@
 package com.illia.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "roles")
-public class Role {
-
+@Table(name = "login_table")
+public class LoginTableTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 
-    @Column(name="name",unique = true)
+    @Column(name="login",unique = true)
     private String name;
 
+    @Column(name="password",unique = true)
+    private String password;
 
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "role",fetch = FetchType.LAZY)
-    private List<User> users;
-
-    public Role(){
-
+    public LoginTableTest() {
     }
 
-    public Role(long id, String name) {
+    public LoginTableTest(long id, String name, String password) {
         this.id = id;
         this.name = name;
+        this.password = password;
     }
 
     public long getId() {
@@ -50,32 +43,32 @@ public class Role {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "LoginTableTest{" +
                 "id=" + id +
-                ", name='" + name +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return id == role.id && Objects.equals(name, role.name);
+        LoginTableTest that = (LoginTableTest) o;
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(password, that.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, password);
     }
 }

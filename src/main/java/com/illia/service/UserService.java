@@ -7,6 +7,7 @@ import com.illia.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.module.ResolutionException;
@@ -18,6 +19,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @Autowired
     private UserMapper userMapper;;
@@ -39,7 +42,9 @@ public class UserService {
     public UserDTO save(UserDTO userDTO) {
         try {
             User user = userMapper.toEntityEager(userDTO);
+            user.setPassword(encoder.encode(user.getPassword()));
             userRepository.save(user);
+            userDTO = userMapper.toDtoLazy(user);
             return userDTO;
         }catch (Exception ex){
             throw ex;
@@ -69,7 +74,7 @@ public class UserService {
         }
 
         if (resaveUser.getPassword() != null && resaveUser.getPassword().length() >= 8) {
-            existingUser.setPassword(resaveUser.getPassword()); // Можна додати хешування пароля
+            existingUser.setPassword(encoder.encode(resaveUser.getPassword())); // Можна додати хешування пароля
         } else if (resaveUser.getPassword() != null) {
             throw new IllegalArgumentException("Password must be at least 8 characters long");
         }
@@ -85,8 +90,11 @@ public class UserService {
         // Save
         User updatedUser = userRepository.save(existingUser);
 
+        UserDTO updatedUserDTO = userMapper.toDtoLazy(updatedUser);
+        updatedUserDTO.setPassword(null);
+
         // Return updated DTO
-        return userMapper.toDtoEager(updatedUser);
+        return updatedUserDTO;
     }
 
 

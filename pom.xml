@@ -21,6 +21,14 @@
         <testcontainers.version>1.19.0</testcontainers.version>
         <downloadSources>true</downloadSources>
         <downloadJavadocs>true</downloadJavadocs>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd-HH-mm</maven.build.timestamp.format>
+
+        <liquibase.version>4.30.0</liquibase.version>
+        <lombok.version>1.18.36</lombok.version>
+        <jakarta.version>3.1.0</jakarta.version>
+        <spring.version>3.1.2</spring.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
     </properties>
 
     <dependencies>
@@ -28,7 +36,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.36</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -40,7 +48,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.30.0</version>
+            <version>${liquibase.version}</version>
         </dependency>
 
 
@@ -148,7 +156,7 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.5.Final</version>
+            <version>${mapstruct.version}</version>
         </dependency>
 
         <!--Added for working-->
@@ -158,11 +166,13 @@
             <version>3.17.0</version>
         </dependency>
 
+
+
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>1.5.5.Final</version>
-            <scope>provided</scope>
+            <groupId>org.liquibase.ext</groupId>
+            <artifactId>liquibase-hibernate6</artifactId>
+            <version>${liquibase.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>
@@ -191,17 +201,45 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.30.0</version> <!-- Використовуйте останню стабільну версію -->
+                <version>${liquibase.version}</version> <!-- Використовуйте останню стабільну версію -->
                 <configuration>
                     <propertyFile>src/main/resources/db/liquibase.properties</propertyFile>
+                    <diffChangeLogFile>src/main/resources/db/changelog/version_1_0/changelog_${timestamp}.xml</diffChangeLogFile>
+                    <outputChangeLogFile>src/main/resources/db/changelog/version_1_0/Initial_changelog.xml</outputChangeLogFile>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.liquibase.ext</groupId>
-                        <artifactId>liquibase-hibernate5</artifactId>
-                        <version>4.27.0</version>
+                        <artifactId>liquibase-hibernate6</artifactId>
+                        <version>${liquibase.version}</version>
+                        <scope>runtime</scope>
                     </dependency>
+                    <dependency>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-core</artifactId>
+                        <version>${liquibase.version}</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-data-jpa</artifactId>
+                        <version>${spring.version}</version>
+                    </dependency>
+
+                    <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+                    <dependency>
+                        <groupId>jakarta.validation</groupId>
+                        <artifactId>jakarta.validation-api</artifactId>
+                        <version>${jakarta.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+
                 </dependencies>
+
 
             </plugin>
 
@@ -214,6 +252,18 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
