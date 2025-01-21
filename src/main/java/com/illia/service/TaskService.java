@@ -49,7 +49,7 @@ public class TaskService {
         }
     }
 
-    @Transactional
+    @Transactional(rollbackOn = EntityNotFoundException.class)
     public TaskDTO update(TaskDTO taskDTO) {
         // Check this task exist or not.
         Task existingTask = taskRepository.findById(taskDTO.getId())

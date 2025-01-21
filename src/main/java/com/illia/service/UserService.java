@@ -51,7 +51,7 @@ public class UserService {
         }
     }
 
-    @Transactional
+    @Transactional(rollbackOn = EntityNotFoundException.class)
     public UserDTO update(UserDTO userDTO) {
         // Перевірка, чи існує користувач із таким ID
         User existingUser = userRepository.findById(userDTO.getId())
