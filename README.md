@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# Spring Boot + Spring data JPA + PostgreSQL example
+# Spring Boot + Spring data JPA + PostgreSQL
 
 Article link : https://mkyong.com/spring-boot/spring-boot/spring-boot-spring-data-jpa-postgresql/
 
@@ -7,10 +7,14 @@ Article link : https://mkyong.com/spring-boot/spring-boot/spring-boot-spring-dat
 Technologies used:
 * Spring Boot 3.1.2
 * Spring Data JPA (Hibernate 6  is the default JPA implementation)
+* Spring Security
+* Spring MVC
+* Liquibase
+* MapStruct
 * PostgreSQL 15
 * Maven
 * Java 17
-* JUnit 5
+* JUnit (Need to add.)
 * Docker
 * [REST Assured](https://rest-assured.io/) and [Testcontainers](https://testcontainers.com/) (for Spring integration tests using a container)
 
@@ -23,11 +27,11 @@ $ cd spring-data-jpa-postgresql
 
 $ ./mvnw clean package -Dmaven.test.skip=true
 
-$ docker run --name pg1 -p 5432:5432 -e POSTGRES_USER=mkyong -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydb -d postgres:15-alpine
+$ docker run --name pg1 -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=todo_test -d
 
 $ ./mvnw spring-boot:run
 
 ```
 =======
 # petProjectSpring
->>>>>>> 574eb43cb9b2629ae1d9e08deae61b199b9c8e0a
+> 574eb43cb9b2629ae1d9e08deae61b199b9c8e0a
