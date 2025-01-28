@@ -27,7 +27,7 @@ $ cd spring-data-jpa-postgresql
 
 $ ./mvnw clean package -Dmaven.test.skip=true
 
-$ docker run --name pg1 -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=todo_test -d
+$ docker run --name pg1 -p 5555:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=todo_test
 
 $ ./mvnw spring-boot:run
 
