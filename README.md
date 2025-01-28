@@ -31,6 +31,10 @@ $ docker run --name pg1 -p 5555:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSW
 
 $ mvn spring-boot:run
 
+$ By default you have: 
+Login: admin 
+Password: admin
+
 ```
 =======
 # petProjectSpring
