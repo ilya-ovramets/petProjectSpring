@@ -23,13 +23,13 @@ Technologies used:
 
 $ git clone https://github.com/ilya-ovramets/petProjectSpring.git
 
-$ cd spring-data-jpa-postgresql
+$ cd .\petProjectSpring\
 
-$ ./mvnw clean package -Dmaven.test.skip=true
+$ mvn clean package
 
-$ docker run --name pg1 -p 5555:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=todo_test
+$ docker run --name pg1 -p 5555:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=todo_test -d postgres
 
-$ ./mvnw spring-boot:run
+$ mvn spring-boot:run
 
 ```
 =======
